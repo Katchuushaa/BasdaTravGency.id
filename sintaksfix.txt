@@ -1,0 +1,60 @@
+CREATE DATABASE project;
+
+\c project
+
+CREATE TABLE pengguna(
+id serial,
+username VARCHAR(64) NOT NULL,
+nama VARCHAR(64) NOT NULL,
+tanggal_lahir DATE NOT NULL,
+gender VARCHAR(16) NOT NULL,
+nomor_hp VARCHAR(20) NOT NULL,
+email VARCHAR(64) NOT NULL,
+pass VARCHAR(64) NOT NULL,
+jenis_pengguna INT NOT NULL,
+CONSTRAINT pengguna_id_PK PRIMARY KEY(id));
+
+CREATE TABLE paket(
+id serial,
+nama_wisata VARCHAR(64) NOT NULL,
+lokasi_wisata VARCHAR(64) NOT NULL,
+harga_paket INT NOT NULL,
+CONSTRAINT paket_id_PK PRIMARY KEY(id));
+
+CREATE TABLE transportasi(
+id serial,
+jenis_kendaraan VARCHAR(64) NOT NULL,
+CONSTRAINT transportasi_id_PK PRIMARY KEY(id));
+
+CREATE TABLE pesanan(
+id serial,
+id_pengguna INT NOT NULL,
+id_paket INT NOT NULL,
+id_transportasi INT NOT NULL,
+jumlah_orang INT NOT NULL,
+durasi INT NOT NULL,
+nomor_hp VARCHAR(20) NOT NULL, 
+usia INT NOT NULL,
+alamat VARCHAR(64) NOT NULL,
+tanggal_pemesanan DATE NOT NULL,
+CONSTRAINT pesanan_id_PK PRIMARY KEY(id),
+CONSTRAINT pengguna_id_FK FOREIGN KEY(id_pengguna) REFERENCES 
+pengguna(id),
+CONSTRAINT paket_id_FK FOREIGN KEY(id_paket) REFERENCES 
+paket(id),
+CONSTRAINT transportasi_id_FK FOREIGN KEY(id_transportasi) REFERENCES 
+transportasi(id));
+
+INSERT INTO pengguna (username, nama, tanggal_lahir, gender, nomor_hp, email, pass, jenis_pengguna) VALUES('admin', 'admin', '01-Jan-2001', 'lk', '081245783698', 'kel11@gmail.com', 'admin', 1);
+
+INSERT INTO pengguna (username, nama, tanggal_lahir, gender, nomor_hp, email, pass, jenis_pengguna) VALUES('visitor', 'visitor', '10-Dec-2001', 'pr', '085648974568', 'kel11@gmail.com', '123', 2);
+
+INSERT INTO paket (nama_wisata, lokasi_wisata, harga_paket) VALUES ('Pulau Tidung', 'Kepulauan Seribu', 250000);
+INSERT INTO paket (nama_wisata, lokasi_wisata, harga_paket) VALUES ('Pantai Ancol', 'DKI Jakarta', 200000);
+INSERT INTO paket (nama_wisata, lokasi_wisata, harga_paket) VALUES ('Stadion Gelora Bung Karno', 'DKI Jakarta', 300000);
+
+INSERT INTO transportasi (jenis_kendaraan) VALUES ('mobil');
+INSERT INTO transportasi (jenis_kendaraan) VALUES ('bus');
+INSERT INTO transportasi (jenis_kendaraan) VALUES ('Kereta Api');
+INSERT INTO transportasi (jenis_kendaraan) VALUES ('Pesawat');
+INSERT INTO transportasi (jenis_kendaraan) VALUES ('-');
